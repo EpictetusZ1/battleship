@@ -1,17 +1,30 @@
-const Ship = require("../ship")
+import {Ship} from "../ship";
 
-// Want to check AFTER hit() if (Ship.isSunk)
-// Write a test to match the constructor to ensure it has valid properties?
+let myShip = new Ship(5, [1, 2])
 
-describe("Evaluate Ship Public Methods", () => {
+const mockHit = jest.fn( () => {
+    return [1, 3]
+})
 
-    const myShip = Ship(5, 2)
-    const mockHit = jest.fn( () => {
-        return myShip.hit(2)
+describe("Evaluate Ship Public Methods ", () => {
+
+    test("Check object output", () => {
+        expect(myShip).toMatchObject({
+            len: [0, 0, 0, 0, 0],
+            position: [1, 2],
+            axis: "x",
+            hitArea: [
+                [1, 2],
+                [1, 3],
+                [1, 4],
+                [1, 5],
+                [1, 6],
+            ]
+        })
     })
 
-    test("Check if Ship updates its value(s) after hit()", () => {
-        expect(mockHit()).toBe(1)
+    test.skip("Check if Ship updates its value(s) after hit()", () => {
+        expect(myShip.hit(mockHit)).toEqual(myShip.hitArea[0] === 1)
     })
 
 })

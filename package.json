@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/EpictetusZ1/battleship#readme",
   "devDependencies": {
+    "@babel/preset-env": "^7.15.8",
     "css-loader": "^6.4.0",
     "jest": "^27.3.1",
     "style-loader": "^3.3.1",
