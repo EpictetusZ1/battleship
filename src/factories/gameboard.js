@@ -28,22 +28,28 @@ export class Gameboard {
         if (this.difficulty < myShip.hitTracker.length + axis) throw new Error("Ship off game board area.")
     }
 
-    addShipYAxis(myShip, x, y) {
-        this._checkOverFlow(myShip, y)
-        for (let i = 0; i < myShip.hitTracker.length; i++) {
-            this.grid[x + i].splice(this.grid[y], 1, myShip.hitTracker[i])
-        }
-
+    _checkOverLap(myShip, axis) {
+        if (this.grid[axis].indexOf(null) !== -1) throw new Error("Ship overlaps with another")
     }
 
-    placeShip(coords, axis = "x") {
+    addShipYAxis(myShip, x, y) {
+        this._checkOverFlow(myShip, y)
+        try {
+            this._checkOverLap(myShip, y)
+            for (let i = 0; i < myShip.hitTracker.length; i++) {
+                this.grid[x + i].splice(this.grid[y], 1, myShip.hitTracker[i])
+            }
+        } catch (Error) {
+            return this._alertNotPlaceable(Error)
+        }
+    }
+
+    placeShip(len, coords, axis = "x") {
         let x = coords[0]
         let y = coords[1]
-        let myShip = new Ship(2, [x, y], axis)
+        let myShip = new Ship(len, [x, y], axis)
 
-        if (myShip.axis === "y") {
-            return this.addShipYAxis(myShip, x, y)
-        }
+        if (myShip.axis === "y") { return this.addShipYAxis(myShip, x, y) }
 
         let targetAxis = this.grid[x]
 
@@ -53,5 +59,9 @@ export class Gameboard {
         } catch (Error) {
             return this._alertNotPlaceable(Error)
         }
+    }
+
+    receiveAttack(e) {
+
     }
 }

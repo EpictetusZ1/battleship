@@ -8,7 +8,7 @@ describe("Evaluate Ship Object ", () => {
     test("Check object output", () => {
         mockHit.mockReturnValue([1, 3])
         expect(myShip).toMatchObject({
-            hitTracker: [0, 0, 0, 0, 0],
+            hitTracker: [null, null, null, null, null],
             position: [1, 2],
             axis: "x",
             sunk: false,
