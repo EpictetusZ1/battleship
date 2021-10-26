@@ -2,9 +2,9 @@ import {Gameboard} from "../gameboard";
 
 describe("Evaluate Game board Object", () => {
 
-    const myBoard = new Gameboard(8, 5)
+    let myBoard = new Gameboard(8, 5)
 
-    const shipMock = {
+    const boardMock = {
         difficulty: 8,
         shipCount: 5,
         grid: [
@@ -20,7 +20,7 @@ describe("Evaluate Game board Object", () => {
     }
 
     test("Check object construction", () => { // Ship takes [x, y] and <optional> Axis
-        expect(myBoard).toMatchObject(shipMock)
+        expect(myBoard).toMatchObject(boardMock)
     })
 
     test("Check that Game board can place Ship.", () => {
@@ -61,5 +61,28 @@ describe("Evaluate Game board Object", () => {
 
     test("Check to ensure error message is thrown and caught if ship.length > gird X || Y", () => {
         expect(myBoard.placeShip([8, 8])).toBe("Ship off game board area.")
+    })
+
+    test("Check placement of ship along Y Axis", () => {
+        myBoard.placeShip([5, 6], "y")
+        expect(myBoard).toMatchObject({
+            difficulty: 8,
+            shipCount: 5,
+            grid: [
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [null, 0, 0, 0, 0, 0, 0, 0],
+                [null, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0]
+            ]
+        })
+
+    })
+
+    test.skip("Check to make sure ships can't overlap", () => {
+
     })
 })
