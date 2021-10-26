@@ -1,8 +1,6 @@
 import {Gameboard} from "../gameboard";
 
-
 describe("Evaluate Game board Object", () => {
-
 
     const myBoard = new Gameboard(8, 5)
 
@@ -43,7 +41,6 @@ describe("Evaluate Game board Object", () => {
         )
     })
 
-
     test("Check for equality in array.length at max length", () => {
         myBoard.placeShip([5, 6])
         expect(myBoard).toMatchObject({
@@ -60,9 +57,9 @@ describe("Evaluate Game board Object", () => {
                 [0, 0, 0, 0, 0, 0, 0, 0]
             ]
         })
-})
+    })
 
-    test.skip("Check length of ship to ensure it is on the Game board", () => {
-
+    test("Check to ensure error message is thrown and caught if ship.length > gird X || Y", () => {
+        expect(myBoard.placeShip([8, 8])).toBe("Ship off game board area.")
     })
 })

@@ -20,10 +20,10 @@ export class Gameboard {
     }
 
     _alertNotPlaceable(Error) {
-        console.log(Error.message)
+        return Error.message
     }
 
-    checkOverFlow(myShip, axis) {
+    _checkOverFlow(myShip, axis) {
         if (this.difficulty < myShip.hitTracker.length + axis) throw new Error("Ship off game board area.")
     }
 
@@ -35,10 +35,10 @@ export class Gameboard {
 
         let targetXAxis = this.grid[x]
         try {
-            this.checkOverFlow(myShip, y)
+            this._checkOverFlow(myShip, y)
             targetXAxis.splice(y, myShip.hitTracker.length, ...myShip.hitTracker)
         } catch (Error) {
-            this._alertNotPlaceable(Error)
+            return this._alertNotPlaceable(Error)
         }
     }
 }
