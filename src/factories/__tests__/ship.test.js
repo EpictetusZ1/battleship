@@ -1,6 +1,6 @@
 import {Ship} from "../ship";
 
-describe("Evaluate Ship Public Methods ", () => {
+describe("Evaluate Ship Object ", () => {
     let myShip = new Ship(5, [1, 2])
 
     const mockHit = jest.fn( () => [1, 2])
@@ -8,7 +8,7 @@ describe("Evaluate Ship Public Methods ", () => {
     test("Check object output", () => {
         mockHit.mockReturnValue([1, 3])
         expect(myShip).toMatchObject({
-            len: [0, 0, 0, 0, 0],
+            hitTracker: [0, 0, 0, 0, 0],
             position: [1, 2],
             axis: "x",
             sunk: false,
@@ -23,7 +23,7 @@ describe("Evaluate Ship Public Methods ", () => {
     })
 
     test("Check if Ship updates its value(s) after hit()", () => {
-        expect(myShip.hit(mockHit)).toEqual(myShip.len[0] === 1)
+        expect(myShip.hit(mockHit)).toEqual(myShip.hitTracker[0] === 1)
     })
 
     test("Check if ship is sunk after N of hits", () => {
@@ -34,7 +34,7 @@ describe("Evaluate Ship Public Methods ", () => {
         myShip.hit([1, 6])
 
         expect(myShip).toMatchObject({
-            len: [1, 1, 1, 1, 1],
+            hitTracker: [1, 1, 1, 1, 1],
             position: [1, 2],
             axis: "x",
             sunk: true,

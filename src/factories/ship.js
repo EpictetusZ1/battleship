@@ -1,14 +1,15 @@
 export class Ship {
-    len = 0
+    hitTracker = 0
     axis = "x || y" // Direction of ship
     position = [0, 0] // X and Y axis on game board
-    hitArea = [ [0, 0], [0, 0] ]
+    hitArea = [ [0, 0], [0, 0] ] // Coords that the ship occupies
     sunk = false
     constructor(len, position, axis = "x", sunk = false) {
-        this.len = [...Array(len).fill(0)]
+        this.hitTracker = [...Array(len).fill(null)]
         this.position = position
         this.axis = axis
         this.hitArea = this.setHitArea(axis, len)
+        this.sunk = sunk
     }
 
     setHitArea(axis, len) {
@@ -29,9 +30,8 @@ export class Ship {
     }
 
     isHit(hitArea, coords) {
-        hitArea.forEach((element, index) => {
+        hitArea.forEach( (element, index) => {
             this._arraysEqual(element, coords, index)
-            console.log(element)
             this.alertHit(index)
             this.isSunk(hitArea)
         })
@@ -39,8 +39,7 @@ export class Ship {
 
     _arraysEqual(a1, a2, index) {
         if (JSON.stringify(a1) === JSON.stringify(a2)) {
-            this.len[index] = 1
-
+            this.hitTracker[index] = 1
         }
     }
 

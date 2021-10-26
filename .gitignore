@@ -2,6 +2,7 @@
 .DS_Store
 
 # Ignore dir:
+.idea/
 dist/
 node_modules/
-.idea/
+coverage/
