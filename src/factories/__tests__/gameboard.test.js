@@ -101,8 +101,7 @@ describe("Evaluate Game board Object", () => {
 describe("Evaluate Public UI methods", () => {
     let myBoard = new Gameboard(8, 5)
 
-
-    test.skip("Check if game board marks miss", () => {
+    test("Check if game board marks miss", () => {
         expect( myBoard.receiveAttack([0, 0]) ).toBe(2)
     })
 

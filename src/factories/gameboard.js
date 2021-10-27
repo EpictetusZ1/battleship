@@ -62,6 +62,12 @@ export class Gameboard {
     }
 
     receiveAttack(e) {
+        let x = e[0]
+        let y = e[1]
+        if (this.grid[x][y] !== null) {
+            // Check if there is a ship "null", if not mark that as 2 = miss on game board
+            return this.grid[x][y] = 2
+        }
 
     }
 }
