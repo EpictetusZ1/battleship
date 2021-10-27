@@ -101,14 +101,9 @@ describe("Evaluate Game board Object", () => {
 describe("Evaluate Public UI methods", () => {
     let myBoard = new Gameboard(8, 5)
 
-    test("Check if receive attack sends coords", () => {
-        let hit
 
-        let e = jest.fn(() => { return {data: 55} })
-
-        let miss = jest.fn( () => { hit = false})
-
-        expect(myBoard.receiveAttack(e)).toBe(miss)
+    test.skip("Check if game board marks miss", () => {
+        expect( myBoard.receiveAttack([0, 0]) ).toBe(2)
     })
 
 })
