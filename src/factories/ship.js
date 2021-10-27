@@ -21,7 +21,7 @@ export class Ship {
     }
 
     isSunk(hitArea) {
-        let bool = hitArea.indexOf("0")
+        let bool = hitArea.indexOf(null)
         if (bool === -1) return this.sunk = true
     }
 
