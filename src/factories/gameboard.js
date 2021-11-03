@@ -67,6 +67,8 @@ export class Gameboard {
         if (this.grid[x][y] !== null) {
             // Check if there is a ship "null", if not mark that as 2 = miss on game board
             return this.grid[x][y] = 2
+        } else {
+            this.grid[x][y] = 5 // Mark as hit
         }
 
     }
