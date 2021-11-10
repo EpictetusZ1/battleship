@@ -14,8 +14,9 @@ describe("Evaluate Game board Object", () => {
         [0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0]
-        ]
-    }
+        ],
+        ships: [1, 2, 3, 4, 5]
+}
 
     test("Check object construction", () => { // Ship takes [x, y] and <optional> Axis
         let myBoard = new Gameboard(8, 5)
@@ -24,77 +25,76 @@ describe("Evaluate Game board Object", () => {
 
     test("Check that Game board can place Ship.", () => {
         let myBoard = new Gameboard(8, 5)
-        myBoard.placeShip(2,[5, 5])
-        expect(myBoard).toMatchObject({
-            difficulty: 8,
-            shipCount: 5,
-            grid: [
+        let myShip = [2, [5, 5]]
+        myBoard.addShip(myShip)
+        expect(myBoard.grid).toStrictEqual([
                 [0, 0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, null, null, 0],
+                [0, 0, 0, 0, 0, 1, 1, 0],
                 [0, 0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0, 0]
-            ]}
+            ]
         )
     })
 
     test("Check for equality in array.length at max length", () => {
         let myBoard = new Gameboard(8, 5)
-        myBoard.placeShip(2, [5, 6])
-        expect(myBoard).toMatchObject({
-            difficulty: 8,
-            shipCount: 5,
-            grid: [
+        let myShip = [2, [5, 6]]
+        myBoard.addShip(myShip)
+        expect(myBoard.grid).toStrictEqual([
                 [0, 0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, null, null],
+                [0, 0, 0, 0, 0, 1, 1, 0],
                 [0, 0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0, 0]
-            ]
-        })
+            ])
     })
 
     test("Check to ensure error message is thrown and caught if ship.length > gird X || Y", () => {
         let myBoard = new Gameboard(8, 5)
-        expect(myBoard.placeShip(2, [8, 8])).toBe("Ship off game board area.")
+        let myShip = [2, [8, 8]]
+        expect(myBoard.addShip(myShip)).toBe("Ship off game board area.")
     })
 
     test("Check placement of ship along Y Axis", () => {
         let myBoard = new Gameboard(8, 5)
-        myBoard.placeShip(2, [5, 6], "y")
-        expect(myBoard).toMatchObject({
-            difficulty: 8,
-            shipCount: 5,
-            grid: [
+        let myShip = [2, [5, 6], "y"]
+        myBoard.addShip(myShip)
+        expect(myBoard.grid).toStrictEqual(
+           [
                 [0, 0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0, 0],
-                [null, 0, 0, 0, 0, 0, 0, 0],
-                [null, 0, 0, 0, 0, 0, 0, 0],
+                [1, 0, 0, 0, 0, 0, 0, 0],
+                [1, 0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0, 0]
             ]
-        })
+        )
 
     })
 
     test("Check Error if partial overlap", () => {
         let myBoard = new Gameboard(8, 5)
-        myBoard.placeShip(2, [5, 6], "y")
-        expect(myBoard.placeShip(2, [5, 5], "y")).toBe("Ship overlaps with another")
+        let myShip = [2, [5, 6], "y"]
+        myBoard.addShip(myShip)
+        let secondShip = [2, [5, 5], "y"]
+        expect(myBoard.addShip(secondShip)).toBe("Ship overlaps with another")
     })
 
     test("Check Error full overlap", () => {
         let myBoard = new Gameboard(8, 5)
-        myBoard.placeShip(2, [5, 6], "y")
-        expect(myBoard.placeShip(2, [5, 6], "y")).toBe("Ship overlaps with another")
+        let myShip = [2, [5, 6], "y"]
+        myBoard.addShip(myShip)
+        let secondShip = [2, [5, 5], "y"]
+        expect(myBoard.addShip(secondShip)).toBe("Ship overlaps with another")
     })
 })
 

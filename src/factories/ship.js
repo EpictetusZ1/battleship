@@ -5,7 +5,7 @@ export class Ship {
     hitArea = [ [0, 0], [0, 0] ] // Coords that the ship occupies
     sunk = false
     constructor(len, position, axis = "x", sunk = false) {
-        this.hitTracker = [...Array(len).fill(null)]
+        this.hitTracker = [...Array(len).fill(1)]
         this.position = position
         this.axis = axis
         this.hitArea = this.setHitArea(axis, len)
@@ -15,14 +15,13 @@ export class Ship {
     setHitArea(axis, len) {
         let area = Array.from(len)
         for (let i = 0; i < len; i ++) {
-                area[i] = [this.position[0], (this.position[1] + i)]
+            area[i] = [this.position[0], (this.position[1] + i)]
         }
         return area
     }
 
     isSunk(hitArea) {
-        let bool = hitArea.indexOf(null)
-        if (bool === -1) return this.sunk = true
+        if (hitArea.indexOf(1) === -1) return this.sunk = true
     }
 
     alertHit(index) {
@@ -30,14 +29,16 @@ export class Ship {
     }
 
     isHit(hitArea, coords) {
+
         hitArea.forEach( (element, index) => {
-            this._arraysEqual(element, coords, index)
+            this._arrayEquality(element, coords, index)
             this.alertHit(index)
             this.isSunk(hitArea)
         })
+
     }
 
-    _arraysEqual(a1, a2, index) {
+    _arrayEquality(a1, a2, index) {
         if (JSON.stringify(a1) === JSON.stringify(a2)) {
             this.hitTracker[index] = 1
         }
