@@ -25,7 +25,7 @@ export class Ship {
     }
 
     alertHit(index) {
-        return console.log(`HIT at: ${index}`)
+        return console.log(`HIT at: ${index}`) // Add method to alert player here
     }
 
     isHit(hitArea, coords) {
@@ -47,6 +47,7 @@ export class Ship {
     hit(coords) {
         if (coords[0] === this.position[0] || coords[1] === this.position[1]) {
             this.isHit(this.hitArea, coords)
+            this.hitArea[coords] = 5
         }
         else return false
     }
