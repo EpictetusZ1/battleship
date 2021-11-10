@@ -1,7 +1,6 @@
 import {Gameboard} from "../gameboard";
 
 describe("Evaluate Game board Object", () => {
-
     const boardMock = {
         difficulty: 8,
         shipCount: 5,
@@ -15,7 +14,8 @@ describe("Evaluate Game board Object", () => {
         [0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0]
         ],
-        ships: [1, 2, 3, 4, 5]
+        ships: [1, 2, 3, 4, 5],
+        defeated: false
 }
 
     test("Check object construction", () => { // Ship takes [x, y] and <optional> Axis
@@ -78,7 +78,6 @@ describe("Evaluate Game board Object", () => {
                 [0, 0, 0, 0, 0, 0, 0, 0]
             ]
         )
-
     })
 
     test("Check Error if partial overlap", () => {
@@ -105,4 +104,27 @@ describe("Evaluate Public UI methods", () => {
         expect( myBoard.receiveAttack([0, 0]) ).toBe(2)
     })
 
+    const defeatMock = jest.fn(() => {
+        for (let i = 0; i < 5; i++) {
+            let myShip = [3, [i, 0], "y"]
+            myBoard.addShip(myShip)
+        }
+    })
+
+    test("Check reporting.", () => {
+        expect(myBoard.grid).toStrictEqual([
+                [5, 5, 5, 0, 0, 0, 0, 0],
+                [5, 5, 5, 0, 0, 0, 0, 0],
+                [5, 5, 5, 0, 0, 0, 0, 0],
+                [5, 5, 5, 0, 0, 0, 0, 0],
+                [5, 5, 5, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0]
+            ]
+        )})
+
 })
+
+
+

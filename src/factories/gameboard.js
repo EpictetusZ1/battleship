@@ -2,7 +2,7 @@ import {Ship} from "./ship";
 
 export class Gameboard {
     difficulty = {medium: 8} || {hard: 10}
-    shipCount = 5 || 3 || 2
+    shipCount = 5 || 3
     ships = []
     #numOfShips
     constructor(difficulty = 10, shipCount) {
@@ -21,25 +21,25 @@ export class Gameboard {
         return xAxis
     }
 
-    _alertNotPlaceable(Error) {
+    alertNotPlaceable(Error) {
         return Error.message
     }
 
-    _checkOverFlow(myShip, axis) {
+    #checkOverFlow(myShip, axis) {
         if (this.difficulty < myShip.hitTracker.length + axis) throw new Error("Ship off game board area.")
     }
 
-    _checkOverLap(myShip, axis) {
+    #checkOverLap(myShip, axis) {
         if (this.grid[axis].indexOf(1) !== -1) throw new Error("Ship overlaps with another")
     }
 
-    addShipYAxis(myShip, x, y) {
+    #addShipYAxis(myShip, x, y) {
         for (let i = 0; i < myShip.hitTracker.length; i++) {
             this.grid[x + i].splice(this.grid[y], 1, myShip.hitTracker[i])
         }
     }
 
-    addShipXAxis(myShip, x) {
+    #addShipXAxis(myShip, x) {
         for (let i = 0; i < myShip.hitTracker.length; i++) {
             this.grid[x][x + i] = myShip.hitTracker[i]
         }
@@ -49,25 +49,25 @@ export class Gameboard {
         let newShip = new Ship(...data)
         this.ships[this.#numOfShips] = newShip
         this.#numOfShips++
-        return this.placeShip(newShip["len"], newShip["position"])
+        return this.#placeShip(newShip["len"], newShip["position"])
     }
 
-    placeShip(len, coords) {
+    #placeShip(len, coords) {
         let x = coords[0]
         let y = coords[1]
         let myShip = this.ships[this.#numOfShips - 1]
 
         try {
             if (myShip.axis === "y") {
-                this._checkOverFlow(myShip, y)
-                this._checkOverLap(myShip, y)
-                this.addShipYAxis(myShip, x, y)
+                this.#checkOverFlow(myShip, y)
+                this.#checkOverLap(myShip, y)
+                this.#addShipYAxis(myShip, x, y)
             } else if (myShip.axis === "x") {
-                this._checkOverFlow(myShip, x)
-                this.addShipXAxis(myShip, x)
+                this.#checkOverFlow(myShip, x)
+                this.#addShipXAxis(myShip, x)
             }
         } catch (Error) {
-            return this._alertNotPlaceable(Error)
+            return this.alertNotPlaceable(Error)
         }
     }
 
@@ -77,9 +77,6 @@ export class Gameboard {
         if (this.grid[x][y] !== 1) {
             // Check if there is a ship "1", if not mark that as 2 = miss on game board
             return this.grid[x][y] = 2
-        } else {
-            // this.grid[x][y]
         }
-
     }
 }
