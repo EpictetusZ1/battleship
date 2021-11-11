@@ -3,13 +3,13 @@ export class Ship {
     axis = "x || y" // Direction of ship
     position = [0, 0] // X and Y axis on game board
     hitArea = [ [0, 0], [0, 0] ] // Coords that the ship occupies
-    sunk = false
-    constructor(len, position, axis = "x", sunk = false) {
+    constructor(len, position, axis = "x") {
+        this.len = len
         this.hitTracker = [...Array(len).fill(1)]
         this.position = position
         this.axis = axis
         this.hitArea = this.setHitArea(axis, len)
-        this.sunk = sunk
+        this.sunk = false
     }
 
     setHitArea(axis, len) {
@@ -29,27 +29,32 @@ export class Ship {
     }
 
     isHit(hitArea, coords) {
-
+        console.log("isHIT method being called")
         hitArea.forEach( (element, index) => {
-            this._arrayEquality(element, coords, index)
+            this.arrayEquality(element, coords, index)
             this.alertHit(index)
             this.isSunk(hitArea)
         })
-
     }
 
-    _arrayEquality(a1, a2, index) {
+    arrayEquality(a1, a2, index) {
+        console.log("Array equality thing")
+        console.log(a1, a2, index)
         if (JSON.stringify(a1) === JSON.stringify(a2)) {
-            this.hitTracker[index] = 1
+            this.hitTracker[index] = 5
         }
     }
 
     hit(coords) {
         if (coords[0] === this.position[0] || coords[1] === this.position[1]) {
+            for (let i = 0; i < this.hitArea.length; i ++) {
+                if (this.hitArea[i][0] === coords[0] || this.hitArea[i] === coords[1]) {
+                    return this.hitTracker[i] = 5
+                }
+            }
+
             this.isHit(this.hitArea, coords)
-            this.hitArea[coords] = 5
         }
-        else return false
     }
 }
 

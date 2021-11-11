@@ -1,16 +1,20 @@
 import {Ship} from "./ship";
 
 export class Gameboard {
-    difficulty = {medium: 8} || {hard: 10}
-    shipCount = 5 || 3
-    ships = []
-    #numOfShips
-    constructor(difficulty = 10, shipCount) {
-        this.difficulty = difficulty
-        this.shipCount = shipCount
-        this.grid = this.setGrid(difficulty)
-        this.ships = [1, 2, 3, 4, 5]
-        this.#numOfShips = 0
+    difficulty = 10
+    ships = {}
+    constructor() {
+        this.difficulty = 10
+        this.grid = this.setGrid(10)
+        this.defeated = false
+        this.increment = 0
+        this.ships = {
+            ship1: { name: "Carrier", len: 5},
+            ship2: { name: "Battleship", len: 4},
+            ship3: { name: "Destroyer", len: 3},
+            ship4: { name: "Submarine", len: 3},
+            ship5: { name: "Patrol Boat", len: 2},
+        }
     }
 
     setGrid(difficulty) {
@@ -25,58 +29,78 @@ export class Gameboard {
         return Error.message
     }
 
-    #checkOverFlow(myShip, axis) {
+    checkOverFlow(myShip, axis) {
         if (this.difficulty < myShip.hitTracker.length + axis) throw new Error("Ship off game board area.")
     }
 
-    #checkOverLap(myShip, axis) {
+    checkOverLap(myShip, axis) {
         if (this.grid[axis].indexOf(1) !== -1) throw new Error("Ship overlaps with another")
     }
 
-    #addShipYAxis(myShip, x, y) {
+    addShipYAxis(myShip, x, y) {
         for (let i = 0; i < myShip.hitTracker.length; i++) {
             this.grid[x + i].splice(this.grid[y], 1, myShip.hitTracker[i])
         }
     }
 
-    #addShipXAxis(myShip, x) {
+    addShipXAxis(myShip, x) {
         for (let i = 0; i < myShip.hitTracker.length; i++) {
             this.grid[x][x + i] = myShip.hitTracker[i]
         }
     }
 
-    addShip(data) {
-        let newShip = new Ship(...data)
-        this.ships[this.#numOfShips] = newShip
-        this.#numOfShips++
-        return this.#placeShip(newShip["len"], newShip["position"])
+    addShip(pos, axis = "x") {
+        let shipKeys = Object.entries(this.ships)[this.increment]
+        let currShip = shipKeys[1].len
+        let newShip = new Ship(currShip, pos, axis)
+
+        this.increment++
+
+        return this.placeShip(newShip)
     }
 
-    #placeShip(len, coords) {
-        let x = coords[0]
-        let y = coords[1]
-        let myShip = this.ships[this.#numOfShips - 1]
+    placeShip(myShip) {
+        let x = myShip.position[0]
+        let y = myShip.position[1]
 
         try {
+            // Check if ship meets placement conditions
             if (myShip.axis === "y") {
-                this.#checkOverFlow(myShip, y)
-                this.#checkOverLap(myShip, y)
-                this.#addShipYAxis(myShip, x, y)
+                this.checkOverFlow(myShip, y)
+                this.checkOverLap(myShip, y)
+                this.addShipYAxis(myShip, x, y)
             } else if (myShip.axis === "x") {
-                this.#checkOverFlow(myShip, x)
-                this.#addShipXAxis(myShip, x)
+                this.checkOverFlow(myShip, x)
+                this.addShipXAxis(myShip, x)
             }
         } catch (Error) {
             return this.alertNotPlaceable(Error)
         }
     }
 
+    updateShipHit(x, y) {
+
+
+    }
+
     receiveAttack(e) {
         let x = e[0]
         let y = e[1]
+        console.log("coords for hit: ", e)
+
         if (this.grid[x][y] !== 1) {
-            // Check if there is a ship "1", if not mark that as 2 = miss on game board
-            return this.grid[x][y] = 2
+            this.grid[x][y] = 2 // Marks a miss
+        } else {
+            this.grid[x][y] = 5 // Marks a hit
+            this.updateShipHit(x, y)
+            this.checkSunk()
+        }
+    }
+
+    checkSunk() {
+        let ships = this.ships
+        for (let i = 0; i < ships.length; i++) {
+            if (ships.indexOf(ships[i].sunk = false) === -1) return this.defeated = true
         }
     }
 }
