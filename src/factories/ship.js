@@ -1,8 +1,8 @@
 export class Ship {
-    hitTracker = 0
-    axis = "x || y" // Direction of ship
-    position = [0, 0] // X and Y axis on game board
-    hitArea = [ [0, 0], [0, 0] ] // Coords that the ship occupies
+    hitTracker = 0  // Ships representation of its state.
+    axis = "x || y"  // Vector ships will occupy
+    position = [0, 0]   // X and Y axis on game board where ship starts.
+    hitArea = [ [0, 0], [0, 0] ] // Coords that the ship occupies.
     constructor(len, position, name, axis = "x") {
         this.len = len
         this.hitTracker = [...Array(len).fill(1)]
@@ -29,7 +29,7 @@ export class Ship {
     }
 
     alertHit(coords) {
-        return console.log(`HIT at: ${coords}`) // Add method to alert player here
+        return console.log(`HIT at: ${coords}`) // Add method to alert player here.
     }
 
     isHit(coords) {
@@ -45,6 +45,10 @@ export class Ship {
             }
         }
     }
+
+
+
+
 }
 
 

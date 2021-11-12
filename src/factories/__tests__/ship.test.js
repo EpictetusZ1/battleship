@@ -3,14 +3,11 @@ import {Ship} from "../ship";
 describe("Evaluate Ship Object ", () => {
     let myShip = new Ship(5, [1, 2])
 
-    const mockHit = jest.fn(() => [1, 2])
-
     test("Check to make sure ship isnt sunk before hits", () => {
         expect(myShip.sunk).toBe(false)
     })
 
     test("Check object output", () => {
-        mockHit.mockReturnValue([1, 3])
         expect(myShip).toMatchObject({
             hitTracker: [1, 1, 1, 1, 1],
             position: [1, 2],
@@ -27,7 +24,7 @@ describe("Evaluate Ship Object ", () => {
     })
 
     test("Check if Ship updates its value(s) after hit()", () => {
-        expect(myShip.hit(mockHit)).toEqual(myShip.hitTracker[0] === 5)
+        expect(myShip.hit([1, 2])).toBe(5)
     })
 
     test("Check if ship is sunk after N of hits", () => {

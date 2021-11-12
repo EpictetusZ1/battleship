@@ -11,7 +11,7 @@ export class Gameboard {
         this.shipList = []
         this.shipHitTracker = []
         this.ships = {
-            ship1: { name: "Carrier", len: 6},
+            ship1: { name: "Carrier", len: 5},
             ship2: { name: "Battleship", len: 4},
             ship3: { name: "Destroyer", len: 3},
             ship4: { name: "Submarine", len: 3},
