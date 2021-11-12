@@ -28,26 +28,34 @@ export class Gameboard {
     }
 
     alertNotPlaceable(message) {
+        console.log(message)
         return Error(message)
     }
 
     checkOverFlow(myShip) { // Checks properly for X axis ships
-        if (10 < myShip.len + myShip["position"][1]) throw "Ship off game board area."
+        if (10 < myShip.len + myShip.position[0]) throw "Ship off game board area."
+        if (10 < myShip.len + myShip.position[1]) throw "Ship off game board area."
     }
 
     checkOverLap(myShip, axis) {
         if (this.grid[axis].indexOf(1) !== -1) throw "Ship overlaps with another"
     }
 
-    addShipYAxis(myShip, x, y) {
+    checkOverLapY(myShip, x, y) {
         for (let i = 0; i < myShip.len; i++) {
-            this.grid[x + i].splice(this.grid[y], 1, myShip.hitTracker[i])
+            if (this.grid[x + i][y] === 1) throw "Ship overlaps with another"
         }
     }
 
-    addShipXAxis(myShip, x) {
+    addShipXAxis(myShip, x, y) {
         for (let i = 0; i < myShip.len; i++) {
-            this.grid[x][x + i] = myShip.hitTracker[i]
+            this.grid[x][y + i] = myShip.hitTracker[i]
+        }
+    }
+
+    addShipYAxis(myShip, x, y) {
+        for (let i = 0; i < myShip.len; i++) {
+            this.grid[x + i][y] = myShip.hitTracker[i]
         }
     }
 
@@ -59,26 +67,14 @@ export class Gameboard {
 
     updateUniqueShip(x, y) {
         let hitAreas = this.shipHitTracker
-        let shipName
-
         for (let i = 0; i < 5; i++) {
             let targetArea = hitAreas[i]["area"]
             for (let j = 0; j < targetArea.length; j++) {
                 if (targetArea[j][0] === x && targetArea[j][1] === y) {
-                    shipName = hitAreas[i].name
-                    return this.updateShipHit(x, y, shipName)
+                    return this.updateShipHit(x, y, hitAreas[i].name)
                 }
             }
         }
-    }
-
-    trackHitAreas(shipName, hitArea) {
-        let myObj = {
-            name: shipName,
-            area: hitArea
-        }
-        // TODO: Refactor to Obj. literal
-        this.shipHitTracker.push(myObj)
     }
 
     checkPlacement(myShip) {
@@ -87,20 +83,20 @@ export class Gameboard {
 
         try {
             if (myShip.axis === "y") {
-                this.checkOverFlow(myShip)
-                this.checkOverLap(myShip, y)
+                this.checkOverFlow(myShip, y)
+                this.checkOverLapY(myShip, x, y)
                 this.addShipYAxis(myShip, x, y)
                 return 1
             } else if (myShip.axis === "x") {
                 this.checkOverFlow(myShip, x)
-                this.addShipXAxis(myShip, x)
+                this.checkOverLap(myShip, x)
+                this.addShipXAxis(myShip, x, y)
                 return 1
             }
         } catch (Error) {
             return this.alertNotPlaceable(Error)
         }
     }
-
 
     addShip(pos, axis = "x") {
         let shipKeys = Object.entries(this.ships)[this.increment]
@@ -113,11 +109,9 @@ export class Gameboard {
 
             this.shipList.push(newShip) // Store all ships in Game board
             this.increment++ // Used to name each ship
-            this.trackHitAreas(shipName, hitArea)
+            this.shipHitTracker.push( { name: shipName, area: hitArea} )
         }
     }
-
-
 
     receiveAttack(e) {
         let x = e[0]
