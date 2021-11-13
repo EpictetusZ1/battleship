@@ -126,10 +126,12 @@ export class Gameboard {
     }
 
     checkSunk() {
-        let ships = this.shipList
-        for (let i = 0; i < ships.length; i++) {
-            if (ships.indexOf(ships[i].sunk = false) === -1) {
-                // TODO: Double check this method to make sure it is evaluating correctly
+        let counter = 0
+        for (let i = 0; i < this.shipList.length; i++) {
+            if (this.shipList[i].sunk === true) {
+                counter++
+            }
+            if (counter === 5) {
                 return this.defeated = true
             }
         }

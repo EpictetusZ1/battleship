@@ -7,10 +7,10 @@ describe("Evaluate Player Object", () => {
     const myComputer = new Player("Bob the robot", true)
 
     test("Check Players ability to Attack Game board.", () => {
-        expect(myPlayer.attack(mockHit)).toStrictEqual([5, 5])
+        expect(myPlayer.attackSq(mockHit)).toStrictEqual([5, 5])
     })
 
-    test("Check computer can generate attack coords array", () => {
+    test("Check computer can generate attackSq coords array", () => {
         expect(Array.isArray(myComputer.computerMove())).toBe(true)
     })
 

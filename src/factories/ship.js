@@ -22,8 +22,7 @@ export class Ship {
     }
 
     isSunk() {
-        if (!this.hitTracker.indexOf(1)) {
-            console.log("SUNK")
+        if (this.hitTracker.includes(1) === false) {
             return this.sunk = true
         }
     }
@@ -32,23 +31,14 @@ export class Ship {
         return console.log(`HIT at: ${coords}`) // Add method to alert player here.
     }
 
-    isHit(coords) {
-        this.alertHit(coords)
-        this.isSunk()
-    }
-
     hit(coords) {
         for (let i = 0; i < this.hitArea.length; i ++) {
             if (this.hitArea[i][0] === coords[0] && this.hitArea[i][1] === coords[1]) {
-                this.isHit(coords)
-                return this.hitTracker[i] = 5
+                this.hitTracker[i] = 5
+                this.isSunk()
+                this.alertHit(coords)
             }
         }
     }
 
-
-
-
 }
-
-

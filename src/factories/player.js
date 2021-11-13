@@ -5,30 +5,22 @@ export class Player {
         this.name = name
         this.isComputer = isComputer
         this.alreadyHit = []
+        this.isTurn = false
     }
 
-    alertBadCoord(message) {
-        return new Error(message)
-    }
-
-    checkIsAlreadyHit(coords) {
-        if (this.alreadyHit.includes(coords)) {
-            if (this.isComputer === false) this.alertBadCoord("This coordinate has already been hit")
-            else this.computerMove()
-        }
-    }
-
-    attack(e) {
-        this.alreadyHit.push( [e[0], e[1]] )
+    attackSq(e) {
         return [e[0], e[1]] // Coords to send -> board based off e.target.data
     }
 
     computerMove() {
-        let x = Math.floor((Math.random() * 9) + 1)
-        let y = Math.floor((Math.random() * 9) + 1)
-        console.log([x, y])
+        let x = Math.floor((Math.random() * 10))
+        let y = Math.floor((Math.random() * 10))
 
-        this.checkIsAlreadyHit([x, y])
-        return this.attack([x, y])
+        if (this.alreadyHit.includes("" + x + y)) {
+            return this.computerMove()
+        } else {
+            this.alreadyHit.push("" + x + y)
+            return this.attackSq([x, y])
+        }
     }
 }
