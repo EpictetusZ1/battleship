@@ -1,5 +1,13 @@
 @import "reset.css";
 
+:root {
+    --steel-teal: #588b8bff;
+    --white: #ffffffff;
+    --unbleached-silk: #ffd5c2ff;
+    --cadmium-orange: #f28f3bff;
+    --cedar-chest: #c8553dff;
+}
+
 html, body {
     max-width: 100%;
     max-height: 100%;
@@ -9,4 +17,54 @@ body {
     height: 100vh;
     width: 100vw;
     overflow: hidden;
+    font-family: 'Vollkorn', serif;
 }
+
+#content {
+    height: 100%;
+    width: 100%;
+    background-color: var(--cedar-chest);
+}
+
+.title-container {
+    width: 100%;
+    text-align: center;
+    padding-top: 15px;
+    font-size: 4em;
+    letter-spacing: 2px;
+    color: var(--cadmium-orange);
+    font-weight: bold;
+}
+
+.game-container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.player-container {
+    width: 600px;
+    height: 620px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.player-name-container {
+    text-align: center;
+    font-size: 2em;
+    font-family: inherit;
+    color: var(--unbleached-silk);
+}
+
+.player-grid {
+    width: 600px;
+    height: 600px;
+    background-color: pink;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+}
+
+

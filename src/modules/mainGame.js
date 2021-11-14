@@ -43,7 +43,7 @@ const MainGame = (() => {
                 doTurn()
             }
         }
-        loopGame()
+        // loopGame()
     }
 
     return {

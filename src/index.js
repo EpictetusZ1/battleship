@@ -1,7 +1,13 @@
 import mainGame from "./modules/mainGame"
+import "./styles/style.css"
+import MakePage from "./modules/makePage";
 
-const showGame = () => {
-    mainGame.gameLoop()
+const loadContent = () => {
+    MakePage.loadBackground()
 }
 
-showGame()
+const runGame = () => {
+    mainGame.gameLoop()
+}
+loadContent()
+runGame()
