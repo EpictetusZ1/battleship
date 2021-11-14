@@ -1,11 +1,15 @@
 
 export class Player {
     name = "Player 1"
-    constructor(name, isComputer = false) {
+    constructor(name, isComputer = false, isTurn = true) {
         this.name = name
         this.isComputer = isComputer
+        this.isTurn = isTurn
         this.alreadyHit = []
-        this.isTurn = false
+    }
+
+    flipTurn() {
+        this.isTurn = !this.isTurn
     }
 
     attackSq(e) {
