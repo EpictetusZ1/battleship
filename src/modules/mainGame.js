@@ -1,5 +1,6 @@
 import {Gameboard} from "../factories/gameboard";
 import {Player} from "../factories/player";
+import DomInteract from "./DOMInteract";
 
 const MainGame = (() => {
 
@@ -11,11 +12,11 @@ const MainGame = (() => {
         const player2 = new Player("Robot", true, false)
 
         const mockShips = () => {
-            p1Board.addShip( [5, 4] )
-            p1Board.addShip( [4, 4] )
-            p1Board.addShip( [2, 4] )
-            p1Board.addShip( [3, 2] )
-            p1Board.addShip( [0, 1] )
+            if (!p1Board.ready) {
+                DomInteract.coords(p1Board)
+                DomInteract.highLight()
+                console.log(p1Board)
+            }
 
             p2Board.addShip( [5, 4] )
             p2Board.addShip( [4, 4] )

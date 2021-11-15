@@ -3,6 +3,7 @@ import {Ship} from "./ship";
 export class Gameboard {
     difficulty = 10
     ships = {}
+    ready = false
     constructor() {
         this.difficulty = 10
         this.grid = this.setGrid(10)
@@ -110,6 +111,7 @@ export class Gameboard {
             this.shipList.push(newShip) // Store all ships in Game board
             this.increment++ // Used to name each ship
             this.shipHitTracker.push( { name: shipName, area: hitArea} )
+            if (this.increment === 5) this.ready = true
         }
     }
 
