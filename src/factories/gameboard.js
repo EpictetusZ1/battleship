@@ -104,6 +104,10 @@ export class Gameboard {
         let currShip = shipKeys[1].len
         let newShip = new Ship(currShip, pos, shipKeys[0], axis)
 
+        if (this.shipList.length === 4) {
+            this.ready = true
+        }
+
         if (this.checkPlacement(newShip) === 1) {
             let shipName = shipKeys[0]
             let hitArea = newShip.hitArea
@@ -111,7 +115,7 @@ export class Gameboard {
             this.shipList.push(newShip) // Store all ships in Game board
             this.increment++ // Used to name each ship
             this.shipHitTracker.push( { name: shipName, area: hitArea} )
-            if (this.increment === 5) this.ready = true
+            if (this.increment === 5) return this.ready = true
         }
     }
 

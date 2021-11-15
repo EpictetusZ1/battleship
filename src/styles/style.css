@@ -40,7 +40,9 @@ body {
     height: 100%;
     width: 100%;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-evenly;
+    align-content: flex-start;
 }
 
 .player-container {
@@ -80,6 +82,18 @@ body {
 
 .preview {
     background-color: var(--cadmium-orange);
+}
+
+.ship {
+    background-color: var(--cadmium-orange);
+}
+
+.ready-text {
+    padding-top: 25px;
+    width: 100%;
+    font-size: 4em;
+    text-align: center;
+    opacity: 0.5;
 }
 
 

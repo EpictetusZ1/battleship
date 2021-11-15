@@ -22,6 +22,10 @@ const MakePage = (() => {
         titleCont.textContent = "BATTLESHIP"
         content.append(titleCont)
 
+        const readyText = document.createElement("div")
+        readyText.className = "ready-text"
+        readyText.innerText = "Not Ready"
+
         const gameContainer = document.createElement("div")
         gameContainer.className = "game-container"
 
@@ -54,6 +58,7 @@ const MakePage = (() => {
         p2Cont.append(p2Title, p2Grid)
 
         gameContainer.append(p1Cont, p2Cont)
+        gameContainer.append(readyText)
         content.appendChild(gameContainer)
     }
 

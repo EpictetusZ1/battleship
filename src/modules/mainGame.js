@@ -14,10 +14,8 @@ const MainGame = (() => {
         const mockShips = () => {
             if (!p1Board.ready) {
                 DomInteract.coords(p1Board)
-                DomInteract.highLight()
-                console.log(p1Board)
+                DomInteract.highLight(p1Board)
             }
-
             p2Board.addShip( [5, 4] )
             p2Board.addShip( [4, 4] )
             p2Board.addShip( [2, 4] )
@@ -25,6 +23,7 @@ const MainGame = (() => {
             p2Board.addShip( [0, 1] )
         }
         mockShips()
+
 
         const doTurn = () => {
             if (player1.isTurn ) {
@@ -40,11 +39,17 @@ const MainGame = (() => {
         }
 
         const loopGame = () => {
-            while (p1Board.defeated === false && p2Board.defeated === false) {
-                doTurn()
+            if (p1Board.ready === true ) {
+                while (p1Board.defeated === false && p2Board.defeated === false) {
+                    doTurn()
+                    //TODO: add function here to handle clicks on both boards
+                }
+            } else {
+                setTimeout( loopGame, 1000) // Check once a second if game is ready
+                console.log("loop")
             }
         }
-        // loopGame()
+        loopGame()
     }
 
     return {
