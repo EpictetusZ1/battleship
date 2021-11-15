@@ -28,7 +28,8 @@ export class Ship {
     }
 
     alertHit(coords) {
-        return console.log(`HIT at: ${coords}`) // Add method to alert player here.
+        console.log(coords)
+        return coords
     }
 
     hit(coords) {

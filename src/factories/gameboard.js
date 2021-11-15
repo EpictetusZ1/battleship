@@ -125,9 +125,11 @@ export class Gameboard {
 
         if (this.grid[x][y] !== 1) {
             this.grid[x][y] = 2 // Marks a miss
+            return [x,y, 2]
         } else {
             this.grid[x][y] = 5 // Marks a hit
             this.updateUniqueShip(x, y)
+            return [x, y, 5]
         }
     }
 

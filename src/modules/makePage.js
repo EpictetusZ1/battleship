@@ -1,5 +1,4 @@
 const MakePage = (() => {
-
     const content = document.getElementById("content")
 
     const makeGrid = (parent) => {
@@ -65,7 +64,7 @@ const MakePage = (() => {
 
 
     return {
-        loadBackground
+        loadBackground,
     }
 
 })()

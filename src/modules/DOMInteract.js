@@ -8,10 +8,18 @@ const DomInteract = (() => {
         })
     }
 
+    const readyAlert = () => {
+        const readyText = document.querySelector(".ready-text")
+        readyText.innerText = "READY"
+        readyText.classList.add("is-ready")
+        setTimeout(() => {
+            readyText.innerText = ""
+        }, 3000)
+    }
+
     const highLight = () => {
         const p1 = document.getElementById("p1Grid")
         const allSquaresY = document.querySelectorAll(".gridY")
-
 
         const highlightSquares = (e) => {
             let dataStr = e.target.getAttribute("data")
@@ -41,9 +49,8 @@ const DomInteract = (() => {
         })
     }
 
-    const coords = (board) => {
+    const placeShips = (board) => {
         const p1 = document.getElementById("p1Grid")
-        const p2 = document.getElementById("p2Grid")
 
         p1.addEventListener("click", (e) => {
             let dataStr = e.target.getAttribute("data")
@@ -53,16 +60,12 @@ const DomInteract = (() => {
             return board.addShip([parseInt(data[0]), parseInt(data[1])])
         })
 
-        p2.addEventListener("click", (e) => {
-            let dataStr = e.target.getAttribute("data")
-            let data = dataStr.split("")
-            return board.addShip([parseInt(data[0]), parseInt(data[1])])
-        })
     }
 
     return {
-        coords,
+        placeShips,
         highLight,
+        readyAlert,
     }
 })()
 

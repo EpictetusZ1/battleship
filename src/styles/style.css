@@ -92,8 +92,23 @@ body {
     padding-top: 25px;
     width: 100%;
     font-size: 4em;
+    letter-spacing: 3px;
     text-align: center;
     opacity: 0.5;
+    transition: all 0.3s ease-in;
+}
+
+.is-ready {
+    color: #16d516;
+    opacity: 1;
+}
+
+.hit {
+    background-color: red;
+}
+
+.miss {
+    background-color: white;
 }
 
 
