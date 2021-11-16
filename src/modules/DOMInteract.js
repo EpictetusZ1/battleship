@@ -6,20 +6,25 @@ const DomInteract = (() => {
         nodeList.forEach( (el) => {
             el.classList.add("ship")
         })
+
     }
 
     const readyAlert = () => {
         const readyText = document.querySelector(".ready-text")
+        const errorDiv = document.querySelector(".instructionText")
+
         readyText.innerText = "READY"
         readyText.classList.add("is-ready")
         setTimeout(() => {
             readyText.innerText = ""
         }, 3000)
+        errorDiv.innerText = ""
     }
 
     const highLight = () => {
         const p1 = document.getElementById("p1Grid")
         const allSquaresY = document.querySelectorAll(".gridY")
+        const errorDiv = document.querySelector(".instructionText")
 
         const highlightSquares = (e) => {
             let dataStr = e.target.getAttribute("data")
@@ -33,6 +38,7 @@ const DomInteract = (() => {
                 singleSquare.classList.toggle("preview")
                 shipNodes.push(singleSquare)
             }
+
             e.target.addEventListener("mouseout", () => {
                 shipNodes.forEach((el) => el.classList.remove("preview"))
                 shipNodes = []
@@ -42,10 +48,18 @@ const DomInteract = (() => {
         p1.addEventListener("mouseover", (e) => {
             try {
                 highlightSquares(e)
+
             } catch (Error) {
                 allSquaresY.forEach((el) => el.classList.remove("preview"))
-                console.log("Off Gameboard area")
+                errorDiv.innerText = "Ship Off Game board area"
+                errorDiv.classList.add("alertUserErr")
+                setTimeout(() => {
+                    errorDiv.classList.remove("alertUserErr")
+                    errorDiv.innerText = "Place Your Ship!"
+                }, 1000)
+
             }
+
         })
     }
 
@@ -59,7 +73,6 @@ const DomInteract = (() => {
             addPermHighlight(shipNodes)
             return board.addShip([parseInt(data[0]), parseInt(data[1])])
         })
-
     }
 
     return {

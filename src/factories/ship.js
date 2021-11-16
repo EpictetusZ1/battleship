@@ -28,7 +28,6 @@ export class Ship {
     }
 
     alertHit(coords) {
-        console.log(coords)
         return coords
     }
 

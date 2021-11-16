@@ -8,10 +8,6 @@ export class Player {
         this.alreadyHit = []
     }
 
-    flipTurn() {
-        this.isTurn = !this.isTurn
-    }
-
     attackSq(e) {
         return [e[0], e[1]] // Coords to send -> board based off e.target.data
     }

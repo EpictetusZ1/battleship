@@ -8,9 +8,8 @@ const MainGame = (() => {
         const p1Board = new Gameboard()
         const p2Board = new Gameboard()
 
-        const player1 = new Player("Jack", true)
-        const player2 = new Player("Robot", true, false)
-
+        const player1 = new Player("Player 1", true)
+        const player2 = new Player("Computer", true, false)
 
         const mockShips = () => {
             if (!p1Board.ready) {
@@ -23,11 +22,11 @@ const MainGame = (() => {
             p2Board.addShip( [3, 2] )
             p2Board.addShip( [0, 1] )
         }
+
         mockShips()
-
-
         const p1 = document.getElementById("p1Grid")
         const p2 = document.getElementById("p2Grid")
+        const alertWinText = document.querySelector(".ready-text")
 
         p2.addEventListener("click", (e) => {
             let data = e.target.getAttribute("data").split("")
@@ -36,31 +35,35 @@ const MainGame = (() => {
         })
 
         const updateAttack = (data, board) => {
-
-            console.log(data)
             let queryData = "" + data[0] + data[1]
             let singleSquare = board.querySelector(`[data="${queryData}"]`)
             if (data[2] === 2) {
-                // Handles miss
                 singleSquare.classList.add("miss")
             } else if (data[2] === 5) {
-                // Handle hit
                 singleSquare.classList.add("hit")
+            }
+        }
+
+        const checkWin = () => {
+            if (p1Board.defeated === true) {
+                alertWinText.innerHTML = "The Computer Won! You lost."
+
+            }
+            else if (p2Board.defeated === true) {
+                alertWinText.innerHTML = "You Won!"
             }
         }
 
         const doTurn = (attack) => {
             if (p1Board.defeated === false && p2Board.defeated === false) {
                 if (player1.isTurn) {
-                    let updateAttk = p2Board.receiveAttack(attack)
-                    updateAttack(updateAttk, p2)
-                    player1.flipTurn()
-                    player2.flipTurn()
-                } else if (player2.isTurn) {
-                    let updateAttk = p1Board.receiveAttack(player2.computerMove())
-                    updateAttack(updateAttk, p1)
-                    player1.flipTurn()
-                    player2.flipTurn()
+                    let updateAtk = p2Board.receiveAttack(attack)
+                    updateAttack(updateAtk, p2)
+
+                    let move = player2.computerMove()
+                    let updateAttack2 = p1Board.receiveAttack(move)
+                    updateAttack(updateAttack2, p1)
+                    checkWin()
                 }
             }
         }
@@ -68,7 +71,7 @@ const MainGame = (() => {
         let readyDisplayed = false
         const loopGame = () => {
             if (readyDisplayed === false) {
-                if (p1Board.ready === true ){
+                if (p1Board.ready === true ) {
                     DomInteract.readyAlert()
                     readyDisplayed = true
                 }

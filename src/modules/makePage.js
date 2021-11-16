@@ -50,18 +50,21 @@ const MakePage = (() => {
         p2Grid.id = "p2Grid"
         p2Grid.className = "player-grid"
 
+        const errorMessage = document.createElement("div")
+        errorMessage.className = "instructionText"
+        errorMessage.innerText = "Place Your Ship!"
+
         makeGrid(p1Grid)
         makeGrid(p2Grid)
 
         p1Cont.append(p1Title, p1Grid)
         p2Cont.append(p2Title, p2Grid)
 
-        gameContainer.append(p1Cont, p2Cont)
+        gameContainer.append(p1Cont, p2Cont, errorMessage)
+
         gameContainer.append(readyText)
         content.appendChild(gameContainer)
     }
-
-
 
     return {
         loadBackground,

@@ -37,7 +37,7 @@ body {
 }
 
 .game-container {
-    height: 100%;
+    height: 90%;
     width: 100%;
     display: flex;
     flex-wrap: wrap;
@@ -46,8 +46,8 @@ body {
 }
 
 .player-container {
-    width: 600px;
-    height: 620px;
+    width: 60vh;
+    height: 65vh;
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -55,14 +55,15 @@ body {
 
 .player-name-container {
     text-align: center;
-    font-size: 2em;
+    font-size: 1.8em;
+    line-height: 1.5em;
     font-family: inherit;
     color: var(--unbleached-silk);
 }
 
 .player-grid {
-    width: 600px;
-    height: 600px;
+    width: 60vh;
+    height: 65vh;
     background-color: var(--steel-teal);
     border: 1px solid var(--white);
     display: grid;
@@ -89,7 +90,6 @@ body {
 }
 
 .ready-text {
-    padding-top: 25px;
     width: 100%;
     font-size: 4em;
     letter-spacing: 3px;
@@ -109,6 +109,21 @@ body {
 
 .miss {
     background-color: white;
+}
+
+.instructionText {
+    overflow: visible;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    width: 100%;
+    color: white;
+    font-size: 2em;
+    text-align: center;
+    transition: all 0.2s ease-in;
+}
+
+.alertUserErr {
+    color: #ffc200;
 }
 
 
